@@ -1,0 +1,469 @@
+import telebot
+from telebot import types
+
+import schedule
+import time
+
+import psycopg2
+
+conn = psycopg2.connect(database="telegram_bot", user=
+"postgres",password=
+"tchad235", host=
+"localhost",port=
+"5432")
+
+cursor = conn.cursor()
+
+token = "6198248835:AAGZRV7qekJzCsDNlxuR_NAafvyPh2DBfi0"
+bot = telebot.TeleBot(token)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    keyboard = types.ReplyKeyboardMarkup()
+    keyboard.row("Want","/help")
+    bot.send_message(message.chat.id,'Hello! Do you want to know the latest information about MTUCI?', reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['help'])
+def help(message):
+    msg = '''Hie. 
+    
+    My name is bot Badradin. 
+    
+    I will help you with your schedule for each week so that you don't miss your classes. 
+    Just get in touch here. 
+    
+    1) If you want to know more about mtuci, just type /mtuci 
+    2) if you need your weekly schedule just type /week and I will assist you. 
+    3) Not only that, but you can also check your schedule for each day. 
+    4) Just type the name of the day 'example /Monday' and I will always be there for you.'''
+
+    bot.send_message(message.chat.id, msg)
+
+
+@bot.message_handler(commands=['mtuci'])
+def mtuci(message):
+    bot.send_message(message.chat.id, 'The official website of the university is https://mtuci.ru/')
+
+#commands for the Monday
+
+@bot.message_handler(commands=['monday'])
+def monday(message):
+    bot.send_message(message.chat.id, 'Your Schedule for Monday is as follows:')
+
+    def MondayFirst():
+        bot.send_message(message.chat.id, "____________MONDAY___________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Monday_First_Week1')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | "+ \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    MondayFirst()
+
+    def MondaySecond():
+        bot.send_message(message.chat.id, "____________MONDAY___________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Monday_Second_Week2')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | "+ \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    schedule.every().week.do(MondaySecond)
+
+
+
+
+
+#Command for Tuesday
+@bot.message_handler(commands=['tuesday'])
+def tuesday(message):
+    bot.send_message(message.chat.id, 'Your Schedule for Tuesday is as follows:')
+
+    def TuesdayFirst():
+        bot.send_message(message.chat.id, "_________TUESDAY_______________")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Tuesday_First_Week1')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | "+ \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    TuesdayFirst()
+
+    def TuesdaySecond():
+        bot.send_message(message.chat.id, "_________TUESDAY_______________")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Tuesday_Second_Week2')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    schedule.every().week.do(TuesdaySecond)
+
+
+
+
+#Command for Wednesday
+@bot.message_handler(commands=['wednesday'])
+def wednesday(message):
+    bot.send_message(message.chat.id, 'Your Schedule for Wednesday is as follows:')
+
+    def WednesdayFirst():
+        bot.send_message(message.chat.id, "___________WEDNESDAY_________")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Wednesday_First_Week1')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    WednesdayFirst()
+
+    def WednesdaySecond():
+        bot.send_message(message.chat.id, "___________WEDNESDAY_________")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Wednesday_Second_Week2')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    schedule.every().week.do(WednesdaySecond)
+
+
+
+
+#Command for Thursday
+@bot.message_handler(commands=['thursday'])
+def thursday(message):
+    bot.send_message(message.chat.id, 'Your Schedule for Thursday is as follows:')
+
+    def ThursdayFirst():
+        bot.send_message(message.chat.id, "____________THURSDAY______________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Thursday_First_Week1')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    ThursdayFirst()
+
+    def ThursdaySecond():
+        bot.send_message(message.chat.id, "____________THURSDAY______________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Thursday_Second_Week2')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    schedule.every().week.do(ThursdaySecond)
+
+
+
+
+#Command for Friday
+@bot.message_handler(commands=['friday'])
+def friday(message):
+    bot.send_message(message.chat.id, 'Your Schedule for Friday is as follows:')
+
+    def FridayFirst():
+        bot.send_message(message.chat.id, "____________FRIDAY_____________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Friday_First_Week1')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    FridayFirst()
+
+    def FridaySecond():
+        bot.send_message(message.chat.id, "____________FRIDAY_____________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+        cursor.execute('SELECT * FROM Friday_Second_Week2')
+        records = list(cursor.fetchall())
+        bot.send_message(message.chat.id, head)
+        for record in records:
+            record = str(record[0]) + " | " + \
+                     str(record[1]) + " | " + \
+                     str(record[2]) + " | " + \
+                     str(record[3]) + " | " + \
+                     str(record[4]) + " | " + \
+                     str(record[5]) + " | " + \
+                     str(record[6])
+            bot.send_message(message.chat.id, record)
+    schedule.every().week.do(FridaySecond)
+
+
+
+
+
+#Command for the week
+@bot.message_handler(commands=['week'])
+def week(message):
+    bot.send_message(message.chat.id, 'Your Schedule for the Week is as follows:')
+
+
+    def FirstWeek():
+        bot.send_message(message.chat.id, "____________MONDAY___________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+
+        def MondayFirst():
+            cursor.execute('SELECT * FROM Monday_First_Week1')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        MondayFirst()
+        bot.send_message(message.chat.id, "_________TUESDAY_______________")
+
+        def TuesdayFirst():
+            cursor.execute('SELECT * FROM Tuesday_First_Week1')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | "+ \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        TuesdayFirst()
+        bot.send_message(message.chat.id, "___________WEDNESDAY_________")
+
+        def WednesdayFirst():
+            cursor.execute('SELECT * FROM Wednesday_First_Week1')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        WednesdayFirst()
+        bot.send_message(message.chat.id, "____________THURSDAY______________ ")
+
+        def ThursdayFirst():
+            cursor.execute('SELECT * FROM Thursday_First_Week1')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        ThursdayFirst()
+        bot.send_message(message.chat.id, "____________FRIDAY_____________ ")
+
+        def FridayFirst():
+            cursor.execute('SELECT * FROM Friday_First_Week1')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        FridayFirst()
+    FirstWeek()
+
+
+
+
+
+@bot.message_handler(commands=['nextweek'])
+def nextweek(message):
+    bot.send_message(message.chat.id, 'Your Schedule for the Week is as follows:')
+
+
+    def SecondWeek():
+        bot.send_message(message.chat.id, "____________MONDAY___________ ")
+        head = ("Lesson | " + 'Subject | ' + 'Format | ' + 'Starts At | ' + 'Ends At | ' + 'Teacher | ' + 'Room Number')
+
+        def MondaySecond():
+            cursor.execute('SELECT * FROM Monday_Second_Week2')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        MondaySecond()
+        bot.send_message(message.chat.id, "_________TUESDAY_______________")
+
+        def TuesdaySecond():
+            cursor.execute('SELECT * FROM Tuesday_Second_Week2')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        TuesdaySecond()
+        bot.send_message(message.chat.id, "___________WEDNESDAY_________")
+
+        def WednesdaySecond():
+            cursor.execute('SELECT * FROM Wednesday_Second_Week2')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        WednesdaySecond()
+        bot.send_message(message.chat.id, "____________THURSDAY______________ ")
+
+        def ThursdaySecond():
+            cursor.execute('SELECT * FROM Thursday_Second_Week2')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        ThursdaySecond()
+        bot.send_message(message.chat.id, "____________FRIDAY_____________ ")
+
+        def FridaySecond():
+            cursor.execute('SELECT * FROM Friday_Second_Week2')
+            records = list(cursor.fetchall())
+            bot.send_message(message.chat.id, head)
+            for record in records:
+                record = str(record[0]) + " | " + \
+                         str(record[1]) + " | " + \
+                         str(record[2]) + " | " + \
+                         str(record[3]) + " | " + \
+                         str(record[4]) + " | " + \
+                         str(record[5]) + " | " + \
+                         str(record[6])
+                bot.send_message(message.chat.id, record)
+        FridaySecond()
+    SecondWeek()
+
+
+
+
+@bot.message_handler(content_types=['text'])
+def answer(message):
+    if message.text.lower() == 'want':
+        bot.send_message(message.chat.id,'Then you are here - The official website of the university is https://mtuci.ru/upload/iblock/20f/ja1vqwmgs9483ji0dfd4ws37ksh0wkaz/BVT2202.pdf')
+
+    elif message.text.lower() == 'timetable':
+        bot.send_message(message.chat.id, '''To access the timetable, use the following: 
+        /monday for Monday
+        /tuesday for Tuesday
+        /wednesday for Wednesday
+        /thursday for Thursday
+        /friday for Friday
+        /week for current week
+        /nextweek for next week''')
+
+    elif message.text.lower() == 'help':
+        bot.send_message(message.chat.id, 'For help, type /help and we will give you further assistance.')
+
+    else:
+        bot.send_message(message.chat.id, 'Text or command unknown')
+
+bot.infinity_polling()
+
